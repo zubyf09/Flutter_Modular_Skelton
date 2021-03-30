@@ -81,7 +81,6 @@ class _Feed extends State<Feed> with AutomaticKeepAliveClientMixin<Feed> {
   _getFeed() async {
     print("Staring getFeed");
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String userId = googleSignIn.currentUser.id.toString();
     var url =
@@ -95,7 +94,6 @@ class _Feed extends State<Feed> with AutomaticKeepAliveClientMixin<Feed> {
       var response = await request.close();
       if (response.statusCode == HttpStatus.ok) {
         String json = await response.transform(utf8.decoder).join();
-        prefs.setString("feed", json);
         List<Map<String, dynamic>> data =
             jsonDecode(json).cast<Map<String, dynamic>>();
         listOfPosts = _generateFeed(data);
